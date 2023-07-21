@@ -1,0 +1,29 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>MomentumPushers</title>
+  <script src="MomentumPushers.js"></script>
+</head>
+
+<body>
+  <div id="myapp"></div>
+  <script type="module">
+
+  var app = Elm.MomentumPushers.init({
+    node: document.getElementById('myapp')
+  });
+
+  const response = await fetch('lib.wasm');
+  const bytes = await response.arrayBuffer();
+  const module = await WebAssembly.compile(bytes);
+  const instance = await WebAssembly.instantiate(module);
+  const wasmPusher = instance.exports.pusher;
+
+  // ports which use wasm function
+  app.ports.callPusher.subscribe(function(x) {
+    app.ports.returnFromPusher.send(wesmPusher(x));
+  });
+
+  </script>
+</body>
+</html>

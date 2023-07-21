@@ -2,3 +2,8 @@
 elm-stuff
 # elm-repl generated files
 repl-temp-*
+
+# place to build the project in
+build
+# zig generated files
+src-zig/zig-cache
